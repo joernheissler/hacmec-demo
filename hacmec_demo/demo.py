@@ -15,6 +15,7 @@ from hacmec.client import (AcmeAccount, AcmeChallengeDns01, AcmeIdentifier,
                            Hacmec)
 from hacmec.http import aiohttp
 
+from . import VERSION
 from .config import Config, ConfigCertificate
 from .crypto import (build_csr, cert_expiry, gen_private_key,
                      load_or_gen_private_key)
@@ -217,5 +218,5 @@ class AcmeClient:
 
 
 async def demo(config: Config) -> None:
-    async with aiohttp.AioHttpClient('WulfIsTesting/0.2', 'de, en;q=0.5') as http:
+    async with aiohttp.AioHttpClient(f'hACMEc-Demo/{VERSION}', 'en') as http:
         await AcmeClient(config, http).run()

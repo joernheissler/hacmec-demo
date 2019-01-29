@@ -86,4 +86,7 @@ async def build_csr(key: PrivateKey, domains: Sequence[str]) -> bytes:
 
 def cert_expiry(cert: bytes) -> float:
     cert = Certificate.load(unarmor(cert)[2])
-    return (cert['tbs_certificate']['validity']['not_after'].native - datetime.now(tz=timezone.utc)).total_seconds() / 86400
+    now = datetime.now(tz=timezone.utc)
+    valid_to = cert['tbs_certificate']['validity']['not_after'].native
+    seconds_left = (valid_to - now).total_seconds()
+    return seconds_left / 86400
