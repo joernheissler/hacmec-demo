@@ -1,0 +1,64 @@
+---
+# Account information
+account:
+    # ACME directory URL
+    endpoint: https://acme-staging-v02.api.letsencrypt.org/directory
+            # https://acme-v02.api.letsencrypt.org/directory
+
+    # Path to account key, relative to this config file
+    key: account.key
+
+    # Email addresses or other contacts to register ACME account with
+    contacts:
+      - "mailto:caesar@example.org"
+
+    # Algorithm for account key
+    algo: rsa
+
+    # Parameters for account key, parameters depend on algorithm.
+    params:
+        bits: 4096
+        exp: 65537
+
+    # The CA's Terms Of Service you accepted.
+    accepted_tos: xxx # https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf
+
+# DNS zones configured on your DNS server
+zones:
+    # Name of zone
+  - name: example.org
+
+    # Primary DNS server to send the updates to
+    server: primary-dns.example.org
+
+    # Key name
+    key: caesar
+    
+    # Key secret (base64 encoded)
+    secret: ZJSuYvGzLyjIv5LujUv0OO3W456M2w==
+
+    # Key algorithm
+    algo: hmac-sha256
+
+# List of certificates to acquire from CA
+certificates:
+    # Name of certificate; will create directory relative to this config file
+  - name: example
+
+    # List of domains the certificate should be contain
+    domains:
+      - www.example.org
+        example.org
+
+    # Algorithm for server key
+    algo: rsa
+
+    # Parameters for server key, parameters depend on algorithm.
+    params:
+        bits: 4096
+        exp: 65537
+
+    # List of shell commands to run after cert was updated
+    on_update:
+      - echo updated
+      - systemctl reload nginx.service
