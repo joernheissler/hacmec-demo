@@ -48,7 +48,7 @@ certificates:
     # List of domains the certificate should be contain
     domains:
       - www.example.org
-        example.org
+      - example.org
 
     # Algorithm for server key
     algo: rsa
