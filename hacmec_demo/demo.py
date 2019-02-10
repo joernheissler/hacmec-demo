@@ -137,7 +137,7 @@ class AcmeCert:
 
         for cmd in self.config.on_update:
             logging.info(f'Running update hook: {cmd!r}')
-            subprocess.run(cmd, shell=True)
+            subprocess.run(cmd, shell=True, cwd=self.path)
 
 
 class AcmeClient:
