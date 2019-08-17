@@ -58,7 +58,7 @@ def update_txt(
     for fqdn, value in records.items():
         update.replace(strip_zone(fqdn, zone), ttl, 'txt', f'"{value}"')
 
-    dns.query.tcp(update, nserver)
+    dns.query.tcp(update, nserver, timeout=10)
 
 
 def resolve(name: str, typ: str) -> Set[str]:
@@ -70,7 +70,7 @@ def resolve(name: str, typ: str) -> Set[str]:
     logging.info(f'Resolving {name!r} ({typ})')
     while True:
         try:
-            response = dns.resolver.query(name, typ)
+            response = dns.resolver.query(name, typ, lifetime=5)
             break
         except dns.resolver.NoAnswer:
             response = []
@@ -143,7 +143,7 @@ def resolve_txt(name: str, server: str) -> Set[str]:
     server: server IP (v4 or v6) to query.
     """
     try:
-        resp = dns.query.udp(dns.message.make_query(name, 'TXT'), server).answer
+        resp = dns.query.udp(dns.message.make_query(name, 'TXT'), server, timeout=5).answer
         if not resp:
             return set()
         return {
